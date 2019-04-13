@@ -18,23 +18,21 @@ data:
     ## Default:
     # - config/locales/%{locale}.yml
     ## More files:
-    - config/locales/*.%{locale}.yml
-    - lib/generators/hyrax/templates/config/locales/hyrax.%{locale}.yml
-    # ERB is not supported by i18n-tasks. Keep this line here to remind peeps to update these manually
-    # - lib/generators/hyrax/work/templates/locale.%{locale}.yml.erb
-    ## Another gem (replace %#= with %=):
-    # - "<%#= %x[bundle show vagrant].chomp %>/templates/locales/%{locale}.yml"
+    # - config/locales/**/*.%{locale}.yml
 
   # Locale files to write new keys to, based on a list of key pattern => file rules. Matched from top to bottom:
   # `i18n-tasks normalize -p` will force move the keys according to these rules
   write:
     ## For example, write devise and simple form keys to their respective files:
-    - ['{hyrax, simple_form}.*', 'config/locales/\1.%{locale}.yml']
+    # - ['{devise, simple_form}.*', 'config/locales/\1.%{locale}.yml']
     ## Catch-all default:
     # - config/locales/%{locale}.yml
-    - lib/generators/hyrax/templates/config/locales/hyrax.%{locale}.yml
-    # ERB is not supported by i18n-tasks. Keep this line here to remind peeps to update these manually
-    # - lib/generators/hyrax/work/templates/locale.%{locale}.yml.erb
+
+  # External locale data (e.g. gems).
+  # This data is not considered unused and is never written to.
+  external:
+    ## Example (replace %#= with %=):
+    # - "<%#= %x[bundle show vagrant].chomp %>/templates/locales/%{locale}.yml"
 
   ## Specify the router (see Readme for details). Valid values: conservative_router, pattern_router, or a custom class.
   # router: conservative_router
@@ -84,10 +82,14 @@ search:
   ## The options specified above are passed down to each scanner. Per-scanner options can be specified as well.
   ## See this example of a custom scanner: https://github.com/glebm/i18n-tasks/wiki/A-custom-scanner-example
 
-## Google Translate
+## Translation Services
 # translation:
+#   # Google Translate
 #   # Get an API key and set billing info at https://code.google.com/apis/console to use Google Translate
-#   api_key: "AbC-dEf5"
+#   google_translate_api_key: "AbC-dEf5"
+#   # DeepL Pro Translate
+#   # Get an API key and subscription at https://www.deepl.com/pro to use DeepL Pro
+#   deepl_api_key: "48E92789-57A3-466A-9959-1A1A1A1A1A1A"
 
 ## Do not consider these keys missing:
 # ignore_missing:
@@ -108,6 +110,10 @@ search:
 #     - common.ok
 #   fr,es:
 #     - common.brand
+
+## Exclude these keys from the `i18n-tasks check-consistent-interpolations` report:
+# ignore_inconsistent_interpolations:
+# - 'activerecord.attributes.*'
 
 ## Ignore these keys completely:
 # ignore:
