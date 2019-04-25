@@ -140,8 +140,10 @@ Shoulda::Matchers.configure do |config|
 end
 
 require 'active_fedora/cleaner'
+require 'support/system_spec_helper'
 RSpec.configure do |config|
   config.disable_monkey_patching!
+  config.include SystemSpecHelper, type: :system
   config.include Shoulda::Matchers::ActiveRecord, type: :model
   config.include Shoulda::Matchers::ActiveModel, type: :form
   config.include Shoulda::Callback::Matchers::ActiveModel
